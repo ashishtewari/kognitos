@@ -31,10 +31,12 @@ public class EmployeeService {
         if(employee!=null) {
             jsonBody = Utility.convertObjToString(employee, context);
             context.getLogger().log("fetch employee By ID:::" + jsonBody);
+             return createAPIResponse(jsonBody,200,Utility.createHeaders());
         }else{
             jsonBody = "Employee Not Found Exception :" + empId;
+             return createAPIResponse(jsonBody,400,Utility.createHeaders());
         }
-        return createAPIResponse(jsonBody,200,Utility.createHeaders());
+       
     }
 
     public APIGatewayProxyResponseEvent getEmployees(APIGatewayProxyRequestEvent apiGatewayRequest, Context context){
@@ -51,7 +53,7 @@ public class EmployeeService {
         if(employee!=null) {
             dynamoDBMapper.delete(employee);
             context.getLogger().log("data deleted successfully :::" + empId);
-            return createAPIResponse(jsonBody,200,Utility.createHeaders());
+            return createAPIResponse("data deleted successfully." + empId,200,Utility.createHeaders());
         }else{
             jsonBody = "Employee Not Found Exception :" + empId;
             return createAPIResponse(jsonBody,400,Utility.createHeaders());
