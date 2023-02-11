@@ -30,7 +30,7 @@ public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent
                     return employeeService.deleteEmployeeById(apiGatewayRequest, context);
                 }
             default:
-                throw new Error("Unsupported route:::" + apiGatewayRequest.getHttpMethod());
+                throw new Error("Unsupported Methods:::" + apiGatewayRequest.getHttpMethod());
 
         }
     }
