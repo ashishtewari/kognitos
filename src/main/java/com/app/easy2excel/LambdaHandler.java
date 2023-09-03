@@ -1,9 +1,5 @@
 package com.app.easy2excel;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
@@ -14,20 +10,19 @@ public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent
 
     @Override
     public APIGatewayProxyResponseEvent  handleRequest(APIGatewayProxyRequestEvent apiGatewayRequest, Context context) {
-        EmployeeService employeeService = new EmployeeService();
+        OccurrenceService occurrenceService = new OccurrenceService();
         switch (apiGatewayRequest.getHttpMethod()) {
 
             case "POST":
-                return employeeService.saveEmployee(apiGatewayRequest, context);
+                return occurrenceService.saveOccurrence(apiGatewayRequest, context);
 
             case "GET":
                 if (apiGatewayRequest.getPathParameters() != null) {
-                    return employeeService.getEmployeeById(apiGatewayRequest, context);
-                }
-                return employeeService.getEmployees(apiGatewayRequest, context);
-            case "DELETE":
-                if (apiGatewayRequest.getPathParameters() != null) {
-                    return employeeService.deleteEmployeeById(apiGatewayRequest, context);
+                    String word = apiGatewayRequest.getPathParameters().get("word");
+                    if(word!=null){
+                        return occurrenceService.getCountByWord(apiGatewayRequest, context);
+                    }
+
                 }
             default:
                 throw new Error("Unsupported Methods:::" + apiGatewayRequest.getHttpMethod());

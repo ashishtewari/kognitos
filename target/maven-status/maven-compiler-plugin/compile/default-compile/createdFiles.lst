@@ -1,4 +1,6 @@
-com\app\easy2excel\Utility.class
-com\app\easy2excel\LambdaHandler.class
-com\app\easy2excel\entity\Employee.class
-com\app\easy2excel\EmployeeService.class
+com/app/easy2excel/Utility.class
+com/app/easy2excel/domains/Output.class
+com/app/easy2excel/domains/Input.class
+com/app/easy2excel/OccurrenceService.class
+com/app/easy2excel/LambdaHandler.class
+com/app/easy2excel/entity/Occurrence.class
